@@ -1,5 +1,11 @@
-﻿<div>
-    <input type="file" />
-    <button>Upload</button>
-    <img ng-src="{{imgSrc}}" />
+﻿<div class="modal-header">
+    <h4 class="modal-title">Uploading file: {{fp.file.name}}</h4>
+</div>
+<div class="modal-body">
+    <p ng-if="!fp.havePreview">No Preview available for current file.</p>
+    <img ng-if="fp.havePreview" ng-src="{{fp.file.data}}" class="fp-img-preview" />
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="$close()" >Upload File</button>
+    <button class="btn btn-default" ng-click="$dismiss()">Cancel</button>
 </div>

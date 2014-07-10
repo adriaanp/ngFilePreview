@@ -5,14 +5,24 @@
     <meta charset="utf-8" />
     <title>Test Harness</title>
 
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+
+    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="preview.js" type="text/javascript"></script>
+
+    <style>
+        .fp-img-preview {
+            max-height: 100%;
+            max-width: 300px;
+        }
+    </style>
 </head>
 <body>
-    
-
     <div>
-        <span file-preview>Upload</span>
+        <span file-preview="test(file)">Upload</span>
     </div>
     
     <script type="text/javascript">

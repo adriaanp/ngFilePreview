@@ -1,34 +1,37 @@
 ﻿'use strict';
 
-angular.module('filePreviewer', [])
-.directive('openFileDialog', [function () {
-    return {
-        scope: {
-            fileInput: '@openFileDialog'
-        },
-        link: function (scope, elem, attrs) {
-            elem.on('click', function (e) {
-                document.getElementById(scope.fileInput).click();
-            });
-        }
-    }
-}])
-
-.directive('filePreview', [function () {
+angular.module('filePreviewer', ['ui.bootstrap'])
+.directive('filePreview', ['$modal', function ($modal) {
     function link(scope, elem, attrs) {
-        debugger;
+        var input = $('<input type="file" style="position: fixed; left: -800px" />');
+        $('body').append(input);
+
         elem.on('click', function () {
-            elem.find('input')[0].click();
+            input.click();
         });
 
-        elem.find('input').on('change', function () {
-            var file = elem.find('input')[0].files[0];
+        elem.on('$destroy', function () {
+            input.remove();
+        });
+
+        input.on('change', function (e) {
+            var file = e.target.files[0];
 
             var reader = new FileReader();
             reader.onload = function (e) {
-                scope.$apply(function () {
-                    scope.imgSrc = e.target.result;
+                file.data = e.target.result;
 
+                scope.fp = {
+                    file: file,
+                    havePreview: file.data.indexOf('data:image') === 0
+                };
+
+                $modal.open({
+                    templateUrl: 'previewTemplate.html',
+                    scope: scope
+                }).result
+                .then(function(){
+                    scope.filePreview({file: file});
                 });
             };
 
@@ -37,8 +40,9 @@ angular.module('filePreviewer', [])
     };
 
     return {
-        templateUrl: 'previewTemplate.html',
-        scope: {},
+        scope: {
+            filePreview: '&'
+        },
         link: link
     };
 }]);
