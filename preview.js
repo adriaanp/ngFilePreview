@@ -30,8 +30,8 @@ angular.module('filePreviewer', ['ui.bootstrap'])
                     templateUrl: 'previewTemplate.html',
                     scope: scope
                 }).result
-                .then(function(){
-                    scope.filePreview({file: file});
+                .then(function () {
+                    scope.filePreview({ file: file });
                 });
             };
 
@@ -45,4 +45,18 @@ angular.module('filePreviewer', ['ui.bootstrap'])
         },
         link: link
     };
+}])
+.run(['$templateCache', function ($templateCache) {
+    $templateCache.put('previewTemplate.html', 
+    '<div class=\"modal-header\">\n' +
+    '   <h4 class=\"modal-title\">Uploading file: {{fp.file.name}}</h4>\n' +
+    '</div>\n' +
+    '<div class=\"modal-body\">\n' +
+    '   <p ng-if=\"!fp.havePreview\">No Preview available for current file.</p>\n' +
+    '   <img ng-if=\"fp.havePreview\" ng-src=\"{{fp.file.data}}\" class=\"fp-img-preview\" />\n' +
+    '</div>\n' +
+    '<div class=\"modal-footer\">\n' +
+    '   <button class=\"btn btn-primary\" ng-click=\"$close()\" >Upload File</button>\n' +
+    '   <button class=\"btn btn-default\" ng-click=\"$dismiss()\">Cancel</button>\n' +
+    '</div>');
 }]);
