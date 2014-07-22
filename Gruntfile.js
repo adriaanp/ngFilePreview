@@ -21,6 +21,41 @@ module.exports = function (grunt) {
                     keepalive: true
                 }
             }
+        },
+
+        //karma test stuff
+        karma: {
+            options: {
+                basePath: '',
+                frameworks: ['jasmine'],
+                files: [
+                  'bower_components/jquery/dist/jquery.js',
+                  'bower_components/angular/angular.js',
+                  'bower_components/angular-mocks/angular-mocks.js',
+                  'bower_components/angular-bootstrap/ui-bootstrap.js',
+                  'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+                  'preview.js',
+                  'tests/**/*.js'
+                ],
+                exclude: [
+                ],
+                preprocessors: {
+                },
+                reporters: ['progress'],
+                port: 9876,
+                colors: true,
+                logLevel: 'DEBUG', //INFO, ERROR, WARN, DEBUG
+                autoWatch: true,
+                browsers: ['Chrome'],
+                singleRun: false
+            },
+            unit: {
+                options: {
+                    singleRun: true
+                }
+            },
+            tdd: {
+            }
         }
     });
 
@@ -29,6 +64,10 @@ module.exports = function (grunt) {
         grunt.task.run([
             'connect:server'
         ]);
+    });
+
+    grunt.registerTask('test', function (target) {
+        grunt.task.run(['karma:unit'])
     });
 
 };

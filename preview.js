@@ -36,6 +36,7 @@ angular.module('filePreviewer', ['ui.bootstrap'])
             };
 
             reader.readAsDataURL(file);
+            e.target.value = "";
         });
     };
 

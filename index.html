@@ -21,12 +21,18 @@
     </style>
 </head>
 <body>
-    <div>
+    <div ng-controller="ctrl">
         <span file-preview="test(file)">Upload</span>
     </div>
     
     <script type="text/javascript">
         var app = angular.module('app', ['filePreviewer']);
+
+        app.controller('ctrl', function ($scope) {
+            $scope.test = function (file) {
+                console.log(file);
+            };
+        });
     </script>
 </body>
 </html>
